@@ -1,0 +1,52 @@
+C++ 17, 14, 11 features: https://github.com/AnthonyCalandra/modern-cpp-features
+
+Lessons learned in C++:
+
+- Putting a second const after the method definition (of class X) but before the opening bracket { 
+  does not let me change the value of an atrribute of class X; unless such attribute is mutable
+
+- Dynamic dispatch vs Static dispatch. Dispatching takes place when invoking a method. Static dispatch is when at compile time, it is resolved which
+method to invoke. Dynamic dispatch is the process of selecting which implementation of a polymorphic operation (method or function) to call at run time
+
+ Dynamic dispatch can be single or multiple. Single is when invoking a polymorphic operation (e.g. derived class instance with base class type invokes
+an overriden method). Multiple dispatch routes the dynamic dispatch to the implementing function or method using the combined characteristics 
+of one or more arguments.
+
+- Virtual tables and pointers: https://www.hackerearth.com/practice/notes/virtual-function-and-virtual-table-in-c/
+
+- A reference in C++ cannot be null, a pointer can be null. When a reference to a variable1 is assigned to a variable2 is the same as if variable1 = variable2.
+In a pointer is different, once the pointer points from variable1 to variable2, variable1 is not affected anymore
+
+- A purely virtual method is a method that does not have any implementation. It is used for being defined in an abstract class. For example:
+
+class Weapon {
+	public:
+  	
+  	virtual void fire() = 0;
+}
+
+- Things I have read from C++ 11:
+	- auto keyword for verbose types
+	- override and final keywords for virtual methods
+	- smart pointers like std::unique_ptr and std::shared_ptr
+	- lambda expressions
+	- uniform initialization syntax, with brackets
+	- nullptr
+	- threading 
+	- delegate constructors
+	- gl values divide in lvalues and rvalues. rvalues divide in xvalues and prvalues
+
+- What is the difference between stack and heap? Answer in https://stackoverflow.com/questions/79923/what-and-where-are-the-stack-and-heap
+
+- Examples of undefined behavior:
+	
+	- auto myBool = getBoolVector()[0]; when using operator [] on std::vector<bool> it will return a proxy reference, not a bool. If we pass myBool to
+	  a function it may cause undefined behavior cause getBoolVector() returns a temporary that is gonna be destroyed and it will release resources like 
+	  such reference
+	- when trying to use operator [] on an index beyond the size of the vector
+	- engaging in a data race: 2 or more threads writing on a same memory location at the same time
+	- dereference an unitialized iterator
+	- destruct a pointer more than once
+	- returning a reference to a local variable inside the function that returns such reference
+
+- If I want to delete a pointer to a derived instance wrapped in a base variable, I have to declare as virtual the destructor of base
